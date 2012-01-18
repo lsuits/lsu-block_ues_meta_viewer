@@ -245,3 +245,5 @@ $string['settings_loading'] = '{$a} - Applying Changes';
 $string['please_wait'] = 'Your settings are being applied. Please be patient as the process completes.';
 
 $string['application_errors'] = 'The following error occurred while applying the settings: {$a}';
+
+$string['viewer'] = 'User Data Viewer';

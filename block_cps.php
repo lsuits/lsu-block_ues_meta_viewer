@@ -14,9 +14,25 @@ class block_cps extends block_list {
             return $this->content;
         }
 
-        global $CFG;
+        global $CFG, $USER;
 
         require_once $CFG->dirroot . '/blocks/cps/classes/lib.php';
+
+        $content = new stdClass;
+
+        $content->items = array();
+        $content->icons = array();
+        $content->footer = '';
+
+        // User data query box links from this
+        if (is_siteadmin($USER->id)) {
+            $url = new moodle_url('/blocks/cps/viewer.php');
+            $str = get_string('viewer', 'block_cps');
+
+            $content->items[] = html_writer::link($url, $str);
+        }
+
+        $this->content = $content;
 
         if (!ues_user::is_teacher()) {
             return $this->content;
@@ -24,12 +40,6 @@ class block_cps extends block_list {
 
         $sections = ues_user::sections(true);
         $courses = ues_course::merge_sections($sections);
-
-        $content = new stdClass;
-
-        $content->items = array();
-        $content->icons = array();
-        $content->footer = '';
 
         $preferences = cps_preferences::settings();
 
@@ -42,10 +52,9 @@ class block_cps extends block_list {
                 continue;
             }
 
-            $content->items[] = html_writer::link($url, $name);
+            $this->content->items[] = html_writer::link($url, $name);
         }
 
-        $this->content = $content;
-        return $content;
+        return $this->content;
     }
 }
