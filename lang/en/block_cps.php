@@ -247,3 +247,10 @@ $string['please_wait'] = 'Your settings are being applied. Please be patient as 
 $string['application_errors'] = 'The following error occurred while applying the settings: {$a}';
 
 $string['viewer'] = 'User Data Viewer';
+$string['keypadid'] = 'Keypad ID';
+$string['major'] = 'Major';
+$string['college'] = 'College';
+$string['year'] = 'Year';
+$string['reg_status'] - 'Reg. Status';
+$string['degree'] = 'Graduating';
+$string['ferpa'] = 'Ferpa';
