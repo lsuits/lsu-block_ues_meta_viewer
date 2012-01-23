@@ -42,15 +42,32 @@ foreach ($fields as $field) {
 
     $head[] = $handler->name();
     $search[] = $handler->html();
+    $handlers[] = $handler;
 }
 
 $search_table = new html_table();
 $search_table->head = $head;
 $search_table->data = array(new html_table_row($search));
 
+if (!empty($_POST['search'])) {
+    $users = ues_data_viewer::users($handlers);
+    $count = count($users);
+
+    $result = $count ?
+        ues_data_viewer::result_table($users, $handlers) :
+        null;
+    $posted = true;
+} else {
+    $count = 0;
+    $result = $_s('search');
+    $posted = false;
+}
+
 $data = array(
     'search' => $search_table,
-    'result' => $result
+    'posted' => $posted,
+    'result' => $result,
+    'count' => $count
 );
 
 $registers = array(
@@ -61,6 +78,6 @@ $registers = array(
     )
 );
 
-quick_template::render('viewer', $data, 'block_cps', $registers);
+quick_template::render('viewer.tpl', $data, 'block_cps', $registers);
 
 echo $OUTPUT->footer();
