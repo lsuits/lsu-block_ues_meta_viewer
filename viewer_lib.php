@@ -99,7 +99,7 @@ abstract class ues_data_viewer {
             return $handler->sql($dsl);
         };
 
-        // What I'd give for and optional here
+        // What I'd give for an optional here
         try {
             $res = array_reduce($handlers, $flatten, ues::where());
 
