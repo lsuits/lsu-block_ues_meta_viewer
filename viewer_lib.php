@@ -94,16 +94,14 @@ class user_data_text_box extends user_data_ui_element {
 }
 
 abstract class ues_data_viewer {
-    public static function users($handlers) {
+    public static function sql($handlers) {
         $flatten = function($dsl, $handler) {
             return $handler->sql($dsl);
         };
 
         // What I'd give for an optional here
         try {
-            $res = array_reduce($handlers, $flatten, ues::where());
-
-            return ues_user::get_all($res, true);
+            return array_reduce($handlers, $flatten, ues::where());
         } catch (Exception $e) {
             return array();
         }

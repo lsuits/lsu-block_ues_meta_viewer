@@ -14,6 +14,9 @@ if (!is_siteadmin($USER->id)) {
     redirect('/my');
 }
 
+$page = optional_param('page', 0, PARAM_INT);
+$perpage = optional_param('perpage', 100, PARAM_INT);
+
 $_s = ues::gen_str('block_cps');
 
 $blockname = $_s('pluginname');
@@ -43,15 +46,25 @@ foreach ($fields as $field) {
     $head[] = $handler->name();
     $search[] = $handler->html();
     $handlers[] = $handler;
+    $params[$field] = $handler->value();
 }
 
 $search_table = new html_table();
 $search_table->head = $head;
 $search_table->data = array(new html_table_row($search));
 
-if (!empty($_POST['search'])) {
-    $users = ues_data_viewer::users($handlers);
-    $count = count($users);
+if (!empty($_REQUEST['search'])) {
+    $by_filters = ues_data_viewer::sql($handlers);
+
+    try {
+        $count = ues_user::count($by_filters);
+        $users = ues_user::get_all($by_filters, true, 'lastname ASC', '*', $page, $perpage);
+    } catch (Exception $e) {
+        echo $e->getMessage();
+        echo $e->getTraceAsString();
+    }
+
+    $params['search'] = get_string('search');
 
     $result = $count ?
         ues_data_viewer::result_table($users, $handlers) :
@@ -63,11 +76,14 @@ if (!empty($_POST['search'])) {
     $posted = false;
 }
 
+$baseurl = new moodle_url('viewer.php', $params);
+
 $data = array(
     'search' => $search_table,
     'posted' => $posted,
     'result' => $result,
-    'count' => $count
+    'count' => $count,
+    'paging' => $count ? $OUTPUT->paging_bar($count, $page, $perpage, $baseurl->out()) : 0
 );
 
 $registers = array(

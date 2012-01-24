@@ -19,6 +19,7 @@
             <div class="count-results center padded">
                 {"found_results"|s} {$count}
             </div>
+            {$paging}
             <div class="results-table margin-center">
                 {print table=$result}
             </div>
