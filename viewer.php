@@ -14,6 +14,7 @@ if (!is_siteadmin($USER->id)) {
     redirect('/my');
 }
 
+$type = required_param('type', 'PARAM_TEXT');
 $page = optional_param('page', 0, PARAM_INT);
 $perpage = optional_param('perpage', 100, PARAM_INT);
 
@@ -33,16 +34,16 @@ $PAGE->set_url('/blocks/ues_meta_viewer/viewer.php');
 echo $OUTPUT->header();
 echo $OUTPUT->heading($heading);
 
-$fields = ues_data_viewer::generate_keys($USER);
+$fields = ues_meta_viewer::generate_keys($type, $USER);
 
 $head = array();
 $search = array();
 $handlers = array();
 $select = array();
-$params = array();
+$params = array('type' => $type);
 
 foreach ($fields as $field) {
-    $handler = ues_data_viewer::handler($field);
+    $handler = ues_meta_viewer::handler($type, $field);
 
     $head[] = $handler->name();
     $search[] = $handler->html();

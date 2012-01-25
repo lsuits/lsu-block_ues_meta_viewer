@@ -5,6 +5,7 @@
     </div>
     <div class="search-buttons center">
         <input type="hidden" name="page" value="0"/>
+        <input type="hidden" name="type" value="{$type}"/>
         <input type="submit" name="search"
                value="{"search:moodle"|s}"/>
     </div>

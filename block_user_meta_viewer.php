@@ -14,7 +14,7 @@ class block_ues_meta_viewer extends block_list {
             return $this->content;
         }
 
-        global $USER;
+        global $CFG, $USER;
 
         $content = new stdClass;
 
@@ -22,12 +22,21 @@ class block_ues_meta_viewer extends block_list {
         $content->icons = array();
         $content->footer = '';
 
-        // User data query box links from this
-        if (is_siteadmin($USER->id)) {
-            $url = new moodle_url('/blocks/ues_meta_viewer/viewer.php');
-            $str = get_string('viewer', 'block_ues_meta_viewer');
+        require_once $CFG->dirroot . '/blocks/ues_meta_viewer/lib.php';
 
-            $content->items[] = html_writer::link($url, $str);
+        $meta_types = ues_meta_viewer::supported_types();
+
+        // Check capability
+        if (is_siteadmin($USER->id)) {
+            $base = 'blocks/ues_meta_viewer/viewer.php';
+
+            foreach ($meta_types as $type => $support) {
+                $url = new moodle_url($base, array('type' => $type));
+
+                $str = get_string('viewer', 'block_ues_meta_viewer', $support->name());
+
+                $content->items[] = html_writer::link($url, $str);
+            }
         }
 
         $this->content = $content;

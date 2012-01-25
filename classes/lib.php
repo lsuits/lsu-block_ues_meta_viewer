@@ -34,7 +34,7 @@ abstract class meta_data_ui_element {
 
     public function format($user) {
         if (!isset($user->{$this->key()})) {
-            return get_string('not_available', 'block_cps');
+            return get_string('not_available', 'block_ues_meta_viewer');
         }
 
         return $user->{$this->key()};
