@@ -70,15 +70,15 @@ $search_table->head = $head;
 $search_table->data = array(new html_table_row($search));
 
 if (!empty($_REQUEST['search'])) {
-    $by_filters = ues_data_viewer::sql($handlers);
+    $by_filters = ues_meta_viewer::sql($handlers);
 
-    $count = ues_user::count($by_filters);
-    $users = ues_user::get_all($by_filters, true, 'lastname ASC', '*', $page, $perpage);
+    $count = $type::count($by_filters);
+    $res = $type::get_all($by_filters, true, '', '*', $page, $perpage);
 
     $params['search'] = get_string('search');
 
     $result = $count ?
-        ues_data_viewer::result_table($users, $handlers) :
+        ues_meta_viewer::result_table($res, $handlers) :
         null;
     $posted = true;
 } else {
@@ -93,6 +93,7 @@ $data = array(
     'search' => $search_table,
     'posted' => $posted,
     'result' => $result,
+    'type' => $type,
     'count' => $count,
     'paging' => $count ? $OUTPUT->paging_bar($count, $page, $perpage, $baseurl->out()) : 0
 );

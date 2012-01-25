@@ -62,10 +62,8 @@ abstract class ues_meta_viewer {
         $fields->user = $user;
         $fields->keys = $types[$type]->defaults();
 
-        $class = 'ues_' . $type;
-
         // Auto fill based on system
-        $additional_fields = $class::get_meta_names();
+        $additional_fields = $type::get_meta_names();
         foreach ($additional_fields as $field) {
             $fields->keys[] = $field;
         }
@@ -87,12 +85,12 @@ abstract class ues_meta_viewer {
         $supported_types = new stdClass;
 
         $supported_types->types = array(
-            'user' => new ues_user_supported_meta(),
-            'section' => new ues_section_supported_meta(),
-            'course' => new ues_course_supported_meta(),
-            'semester' => new ues_semester_suppported_meta(),
-            'teacher' => new ues_teacher_supported_meta(),
-            'student' => new ues_student_supported_meta()
+            'ues_user' => new ues_user_supported_meta(),
+            'ues_section' => new ues_section_supported_meta(),
+            'ues_course' => new ues_course_supported_meta(),
+            'ues_semester' => new ues_semester_suppported_meta(),
+            'ues_teacher' => new ues_teacher_supported_meta(),
+            'ues_student' => new ues_student_supported_meta()
         );
 
         events_trigger('ues_meta_supported_types', $supported_types);
