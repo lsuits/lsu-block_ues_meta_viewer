@@ -1,8 +1,8 @@
 <?php
 
-class block_cps extends block_list {
+class block_ues_meta_viewer extends block_list {
     function init() {
-        $this->title= get_string('pluginname', 'block_cps');
+        $this->title= get_string('pluginname', 'block_ues_meta_viewer');
     }
 
     function applicable_formats() {
@@ -14,9 +14,7 @@ class block_cps extends block_list {
             return $this->content;
         }
 
-        global $CFG, $USER;
-
-        require_once $CFG->dirroot . '/blocks/cps/classes/lib.php';
+        global $USER;
 
         $content = new stdClass;
 
@@ -26,34 +24,13 @@ class block_cps extends block_list {
 
         // User data query box links from this
         if (is_siteadmin($USER->id)) {
-            $url = new moodle_url('/blocks/cps/viewer.php');
-            $str = get_string('viewer', 'block_cps');
+            $url = new moodle_url('/blocks/ues_meta_viewer/viewer.php');
+            $str = get_string('viewer', 'block_ues_meta_viewer');
 
             $content->items[] = html_writer::link($url, $str);
         }
 
         $this->content = $content;
-
-        if (!ues_user::is_teacher()) {
-            return $this->content;
-        }
-
-        $sections = ues_user::sections(true);
-        $courses = ues_course::merge_sections($sections);
-
-        $preferences = cps_preferences::settings();
-
-        foreach ($preferences as $setting => $name) {
-            $url = new moodle_url("/blocks/cps/$setting.php");
-
-            $obj = 'cps_' . $setting;
-
-            if (method_exists($obj, 'is_valid') and !$obj::is_valid($courses)) {
-                continue;
-            }
-
-            $this->content->items[] = html_writer::link($url, $name);
-        }
 
         return $this->content;
     }
