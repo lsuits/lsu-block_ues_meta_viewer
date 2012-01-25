@@ -36,9 +36,10 @@ echo $OUTPUT->heading($heading);
 $fields = ues_data_viewer::generate_keys($USER);
 
 $head = array();
-$search= array();
+$search = array();
 $handlers = array();
 $select = array();
+$params = array();
 
 foreach ($fields as $field) {
     $handler = ues_data_viewer::handler($field);
@@ -46,7 +47,12 @@ foreach ($fields as $field) {
     $head[] = $handler->name();
     $search[] = $handler->html();
     $handlers[] = $handler;
-    $params[$field] = $handler->value();
+
+    $value = $handler->value();
+    // Only add searched fields as GET param
+    if (!empty($value)) {
+        $params[$field] = $value;
+    }
 }
 
 $search_table = new html_table();
@@ -56,13 +62,8 @@ $search_table->data = array(new html_table_row($search));
 if (!empty($_REQUEST['search'])) {
     $by_filters = ues_data_viewer::sql($handlers);
 
-    try {
-        $count = ues_user::count($by_filters);
-        $users = ues_user::get_all($by_filters, true, 'lastname ASC', '*', $page, $perpage);
-    } catch (Exception $e) {
-        echo $e->getMessage();
-        echo $e->getTraceAsString();
-    }
+    $count = ues_user::count($by_filters);
+    $users = ues_user::get_all($by_filters, true, 'lastname ASC', '*', $page, $perpage);
 
     $params['search'] = get_string('search');
 

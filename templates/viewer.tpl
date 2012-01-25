@@ -1,9 +1,10 @@
 
-<form method="GET" class="search-form">
+<form method="POST" class="search-form">
     <div class="search-table">
         {print table=$search}
     </div>
     <div class="search-buttons center">
+        <input type="hidden" name="page" value="0"/>
         <input type="submit" name="search"
                value="{"search:moodle"|s}"/>
     </div>

@@ -101,7 +101,11 @@ abstract class ues_data_viewer {
 
         // What I'd give for an optional here
         try {
-            return array_reduce($handlers, $flatten, ues::where());
+            $filters = array_reduce($handlers, $flatten, ues::where());
+
+            // Catch empty
+            $filters->get();
+            return $filters;
         } catch (Exception $e) {
             return array();
         }
