@@ -97,6 +97,6 @@ abstract class ues_meta_viewer {
 
         events_trigger('ues_meta_supported_types', $supported_types);
 
-        return $supported_types;
+        return $supported_types->types;
     }
 }

@@ -14,14 +14,23 @@ if (!is_siteadmin($USER->id)) {
     redirect('/my');
 }
 
-$type = required_param('type', 'PARAM_TEXT');
+$supported_types = ues_meta_viewer::supported_types();
+
+$type = required_param('type', PARAM_TEXT);
+
+if (!isset($supported_types[$type])) {
+    print_error('unsupported_type', 'block_ues_meta_viewer', '', $type);
+}
+
+$supported_type = $supported_types[$type];
+
 $page = optional_param('page', 0, PARAM_INT);
 $perpage = optional_param('perpage', 100, PARAM_INT);
 
 $_s = ues::gen_str('block_ues_meta_viewer');
 
 $blockname = $_s('pluginname');
-$heading = $_s('viewer');
+$heading = $_s('viewer', $supported_type->name());
 
 $context = get_context_instance(CONTEXT_SYSTEM);
 

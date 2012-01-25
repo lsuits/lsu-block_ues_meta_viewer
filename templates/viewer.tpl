@@ -1,9 +1,8 @@
-
 <form method="POST" class="search-form">
     <div class="search-table">
         {print table=$search}
     </div>
-    <div class="search-buttons center">
+    <div class="search-buttons center padded">
         <input type="hidden" name="page" value="0"/>
         <input type="hidden" name="type" value="{$type}"/>
         <input type="submit" name="search"

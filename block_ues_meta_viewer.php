@@ -14,7 +14,7 @@ class block_ues_meta_viewer extends block_list {
             return $this->content;
         }
 
-        global $USER;
+        global $CFG, $USER;
 
         $content = new stdClass;
 
@@ -29,7 +29,7 @@ class block_ues_meta_viewer extends block_list {
         // Check capability
         $context = get_context_instance(CONTEXT_SYSTEM);
         if (has_capability('block/ues_meta_viewer:access', $context)) {
-            $base = 'blocks/ues_meta_viewer/viewer.php';
+            $base = '/blocks/ues_meta_viewer/viewer.php';
 
             foreach ($meta_types as $type => $support) {
                 $url = new moodle_url($base, array('type' => $type));

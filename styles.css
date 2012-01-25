@@ -2,6 +2,10 @@
     width: 100%;
 }
 
+#page-blocks-ues_meta_viewer-viewer .search-table table.generaltable {
+    margin: auto auto;
+}
+
 #page-blocks-ues_meta_viewer-viewer .center {
     text-align: center;
 }
