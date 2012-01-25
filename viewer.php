@@ -4,7 +4,7 @@ require_once '../../config.php';
 require_once $CFG->dirroot . '/enrol/ues/publiclib.php';
 ues::require_daos();
 
-require_once 'viewer_lib.php';
+require_once 'lib.php';
 require_once $CFG->libdir . '/quick_template/lib.php';
 
 require_login();
@@ -17,7 +17,7 @@ if (!is_siteadmin($USER->id)) {
 $page = optional_param('page', 0, PARAM_INT);
 $perpage = optional_param('perpage', 100, PARAM_INT);
 
-$_s = ues::gen_str('block_cps');
+$_s = ues::gen_str('block_ues_meta_viewer');
 
 $blockname = $_s('pluginname');
 $heading = $_s('viewer');
@@ -28,7 +28,7 @@ $PAGE->set_context($context);
 $PAGE->set_heading($blockname . ': '. $heading);
 $PAGE->navbar->add($blockname);
 $PAGE->navbar->add($heading);
-$PAGE->set_url('/blocks/cps/viewer.php');
+$PAGE->set_url('/blocks/ues_meta_viewer/viewer.php');
 
 echo $OUTPUT->header();
 echo $OUTPUT->heading($heading);
@@ -95,6 +95,6 @@ $registers = array(
     )
 );
 
-quick_template::render('viewer.tpl', $data, 'block_cps', $registers);
+quick_template::render('viewer.tpl', $data, 'block_ues_meta_viewer', $registers);
 
 echo $OUTPUT->footer();

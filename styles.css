@@ -1,24 +1,24 @@
-#page-blocks-cps-viewer .search-table table.generaltable input {
+#page-blocks-ues_meta_viewer-viewer .search-table table.generaltable input {
     width: 100%;
 }
 
-#page-blocks-cps-viewer .center {
+#page-blocks-ues_meta_viewer-viewer .center {
     text-align: center;
 }
 
-#page-blocks-cps-viewer .padded {
+#page-blocks-ues_meta_viewer-viewer .padded {
     padding: 10px 0px;
 }
 
-#page-blocks-cps-viewer .results-table table.generaltable {
+#page-blocks-ues_meta_viewer-viewer .results-table table.generaltable {
     width: 100%;
 }
 
-#page-blocks-cps-viewer .margin-center {
+#page-blocks-ues_meta_viewer-viewer .margin-center {
     width: 90%;
     margin: auto auto;
 }
 
-#page-blocks-cps-viewer .no-results {
+#page-blocks-ues_meta_viewer-viewer .no-results {
     color: red;
 }
