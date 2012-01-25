@@ -14,7 +14,7 @@ class block_ues_meta_viewer extends block_list {
             return $this->content;
         }
 
-        global $CFG, $USER;
+        global $USER;
 
         $content = new stdClass;
 
@@ -27,7 +27,8 @@ class block_ues_meta_viewer extends block_list {
         $meta_types = ues_meta_viewer::supported_types();
 
         // Check capability
-        if (is_siteadmin($USER->id)) {
+        $context = get_context_instance(CONTEXT_SYSTEM);
+        if (has_capability('block/ues_meta_viewer:access', $context)) {
             $base = 'blocks/ues_meta_viewer/viewer.php';
 
             foreach ($meta_types as $type => $support) {
