@@ -2,6 +2,8 @@
 
 $string['pluginname'] = 'UES Data Viewer';
 
+$string['unsupported_type'] = 'Unsupported type: {$a}';
+
 $string['user'] = 'User';
 $string['section'] = 'Section';
 $string['course'] = 'Course';
