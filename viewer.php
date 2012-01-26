@@ -60,7 +60,7 @@ foreach ($fields as $field) {
 
     $value = $handler->value();
     // Only add searched fields as GET param
-    if (!empty($value)) {
+    if (trim($value) !== '') {
         $params[$field] = $value;
     }
 }

@@ -50,7 +50,7 @@ abstract class ues_meta_viewer {
         $handler = new stdClass;
         $handler->ui_element = new meta_data_text_box($field, $name);
 
-        events_trigger($type . '_data_ui_element', array($handler));
+        events_trigger($type . '_data_ui_element', $handler);
         return $handler->ui_element;
     }
 

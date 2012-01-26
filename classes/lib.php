@@ -75,8 +75,8 @@ class meta_data_text_box extends meta_data_ui_element {
     public function html() {
         $html = '<input type="text" placeholder="'. $this->name() .'" name="'.$this->key().'"';
 
-        if (!is_null($this->value())) {
-            $html .= ' value="'. $this->value().'"';
+        if (trim($this->value()) !== '') {
+            $html .= ' value="'. $this->value() .'"';
         }
 
         $html .= '/>';
@@ -88,7 +88,7 @@ class meta_data_text_box extends meta_data_ui_element {
         $key = $this->key();
         $value = $this->value();
 
-        if (empty($value)) {
+        if (trim($value) === '') {
             return $dsl;
         }
 
