@@ -36,6 +36,7 @@ $context = get_context_instance(CONTEXT_SYSTEM);
 
 $PAGE->set_context($context);
 $PAGE->set_heading($blockname . ': '. $heading);
+$PAGE->set_title($heading);
 $PAGE->navbar->add($blockname);
 $PAGE->navbar->add($heading);
 $PAGE->set_url('/blocks/ues_meta_viewer/viewer.php');
