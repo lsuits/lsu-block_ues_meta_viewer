@@ -9,9 +9,6 @@ require_once $CFG->libdir . '/quick_template/lib.php';
 
 require_login();
 
-$context = get_context_instance(CONTEXT_SYSTEM);
-require_capability('block/ues_meta_viewer:access', $context);
-
 $supported_types = ues_meta_viewer::supported_types();
 
 $type = required_param('type', PARAM_TEXT);
@@ -21,6 +18,12 @@ if (!isset($supported_types[$type])) {
 }
 
 $supported_type = $supported_types[$type];
+
+if (!$supported_type->can_use()) {
+    print_error('unsupported_type', 'block_ues_meta_viewer', '', $type);
+}
+
+$class = $supported_type->wrapped_class();
 
 $page = optional_param('page', 0, PARAM_INT);
 $perpage = optional_param('perpage', 100, PARAM_INT);
@@ -43,7 +46,7 @@ $PAGE->set_url('/blocks/ues_meta_viewer/viewer.php', array('type' => $type));
 echo $OUTPUT->header();
 echo $OUTPUT->heading($heading);
 
-$fields = ues_meta_viewer::generate_keys($type, $USER);
+$fields = ues_meta_viewer::generate_keys($type, $class, $USER);
 
 $head = array();
 $search = array();
@@ -72,8 +75,8 @@ $search_table->data = array(new html_table_row($search));
 if (!empty($_REQUEST['search'])) {
     $by_filters = ues_meta_viewer::sql($handlers);
 
-    $count = $type::count($by_filters);
-    $res = $type::get_all($by_filters, true, '', '*', $page, $perpage);
+    $count = $class::count($by_filters);
+    $res = $class::get_all($by_filters, true, '', '*', $page, $perpage);
 
     $params['search'] = get_string('search');
 
