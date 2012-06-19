@@ -5,7 +5,6 @@ require_once $CFG->dirroot . '/enrol/ues/publiclib.php';
 ues::require_daos();
 
 require_once 'lib.php';
-require_once $CFG->libdir . '/quick_template/lib.php';
 
 require_login();
 
@@ -72,7 +71,7 @@ $search_table = new html_table();
 $search_table->head = $head;
 $search_table->data = array(new html_table_row($search));
 
-if (!empty($_REQUEST['search'])) {
+if ($data = data_submitted() and !empty($data->search)) {
     $by_filters = ues_meta_viewer::sql($handlers);
 
     $count = $class::count($by_filters);
@@ -92,23 +91,36 @@ if (!empty($_REQUEST['search'])) {
 
 $baseurl = new moodle_url('viewer.php', $params);
 
-$data = array(
-    'search' => $search_table,
-    'posted' => $posted,
-    'result' => $result,
-    'type' => $type,
-    'count' => $count,
-    'paging' => $count ? $OUTPUT->paging_bar($count, $page, $perpage, $baseurl->out()) : 0
-);
+$hidden = function($name, $value) {
+    return html_writer::empty_tag('input', array(
+        'name' => $name, 'value' => $value, 'type' => 'hidden'
+    ));
+};
 
-$registers = array(
-    'function' => array(
-        'print' => function ($params, &$smarty) {
-            return html_writer::table($params['table']);
-        }
-    )
-);
+echo html_writer::start_tag('form', array('method' => 'POST', 'class' => 'search-form'));
+echo html_writer::tag('div', html_writer::table($search_table), array('class' => 'search-table'));
+echo html_writer::start_tag('div', array('class' => 'search-buttons center padded'));
+echo $hidden('page', 0) . $hidden('type', $type);
+echo html_writer::empty_tag('input', array(
+    'type' => 'submit', 'name' => 'search', 'value' => get_string('search')
+));
+echo html_writer::end_tag('div');
+echo html_writer::end_tag('form');
 
-quick_template::render('viewer.tpl', $data, 'block_ues_meta_viewer', $registers);
+if ($posted) {
+    echo html_writer::start_tag('div', array('class' => 'results'));
+    if (empty($result)) {
+        echo html_writer::start_tag('div', array('class' => 'no-results center padded'));
+        echo $_s('no_results');
+        echo html_writer::end_tag('div');
+    } else {
+        echo html_writer::tag('div', $_s('found_results') . ' ' . $count,
+            array('class' => 'count-results center padded'));
+        echo $OUTPUT->paging_bar($count, $page, $perpage, $baseurl->out());
+        echo html_writer::tag('div', html_writer::table($result),
+            array('class' => 'results-table margin-center'));
+    }
+    echo html_writer::end_tag('div');
+}
 
 echo $OUTPUT->footer();
