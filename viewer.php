@@ -71,7 +71,7 @@ $search_table = new html_table();
 $search_table->head = $head;
 $search_table->data = array(new html_table_row($search));
 
-if ($data = data_submitted() and !empty($data->search)) {
+if (!empty($_REQUEST['search'])) {
     $by_filters = ues_meta_viewer::sql($handlers);
 
     $count = $class::count($by_filters);
