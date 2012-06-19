@@ -75,7 +75,7 @@ if (!empty($_REQUEST['search'])) {
     $by_filters = ues_meta_viewer::sql($handlers);
 
     $count = $class::count($by_filters);
-    $res = $class::get_all($by_filters, true, '', '*', $page, $perpage);
+    $res = $class::get_all($by_filters, true, '', '*', $page + ($page * $perpage), $perpage);
 
     $params['search'] = get_string('search');
 
