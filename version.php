@@ -30,5 +30,5 @@ $plugin->release   = 'v2.7.0';
  
 $plugin->dependencies = array(
     'enrol_ues' => 2013081007,
-    'cps'       => 2013081019
+    'block_cps' => 2013081019
 );
