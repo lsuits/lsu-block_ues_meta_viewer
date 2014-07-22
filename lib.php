@@ -76,7 +76,7 @@ abstract class ues_meta_viewer {
         $handler = new stdClass;
         $handler->ui_element = new meta_data_text_box($field, $name);
 
-        events_trigger($type . '_data_ui_element', $handler);
+        events_trigger_legacy($type . '_data_ui_element', $handler);
         return $handler->ui_element;
     }
 
@@ -95,7 +95,7 @@ abstract class ues_meta_viewer {
         }
 
         // Should this user see appropriate fields?
-        events_trigger($type . '_data_ui_keys', $fields);
+        events_trigger_legacy($type . '_data_ui_keys', $fields);
 
         return $fields->keys;
     }
@@ -118,7 +118,7 @@ abstract class ues_meta_viewer {
             'ues_student' => new ues_student_supported_meta()
         );
 
-        events_trigger('ues_meta_supported_types', $supported_types);
+        events_trigger_legacy('ues_meta_supported_types', $supported_types);
 
         return $supported_types->types;
     }
