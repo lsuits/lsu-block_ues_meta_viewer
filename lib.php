@@ -153,7 +153,7 @@ abstract class ues_meta_viewer {
         );
 
         require_once $CFG->dirroot.'/blocks/student_gradeviewer/events/lib.php';
-        student_gradeviewer_handlers::ues_meta_supported_types($supported_types);
+        $supported_types = student_gradeviewer_handlers::ues_meta_supported_types($supported_types);
 
         return $supported_types->types;
     }
