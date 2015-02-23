@@ -52,8 +52,10 @@ abstract class ues_meta_viewer {
         global $CFG;
         if(array_key_exists($type, self::$handlermap)){
             foreach(self::$handlermap[$type] as $file => $class){
-                require_once($CFG->dirroot.$file);
-                $class::{$type . '_data_ui_'.$fn}($params);
+                if(file_exists($CFG->dirroot.$file)){
+                    require_once($CFG->dirroot.$file);
+                    $class::{$type . '_data_ui_'.$fn}($params);
+                }
             }
         }
     }
