@@ -30,7 +30,10 @@ require_once 'lib.php';
 
 require_login();
 
+// get a list of supported types (keys)
 $supported_types = ues_meta_viewer::supported_types();
+
+var_dump($supported_types); die;
 
 $type = required_param('type', PARAM_TEXT);
 

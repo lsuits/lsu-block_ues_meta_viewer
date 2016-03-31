@@ -135,12 +135,15 @@ abstract class ues_meta_viewer {
     }
 
     public static function supported_types() {
-        if (!class_exists('supported_meta')) {
+
+        // load the appropriate support libs
+        if ( ! class_exists('supported_meta')) {
             global $CFG;
 
             require_once $CFG->dirroot . '/blocks/ues_meta_viewer/classes/support.php';
         }
 
+        
         $supported_types = new stdClass;
 
         $supported_types->types = array(
