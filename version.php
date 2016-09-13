@@ -22,12 +22,12 @@
  
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2014060200;
+$plugin->version   = 2016091300;
 $plugin->requires  = 2013051400;
 $plugin->component = 'block_ues_meta_viewer';
 $plugin->maturity  = MATURITY_STABLE;
 $plugin->release   = 'v2.7.0';
  
 $plugin->dependencies = array(
-    'enrol_ues' => 2013081007
+    'enrol_ues' => 2016083000
 );
