@@ -53,11 +53,8 @@ class block_ues_meta_viewer extends block_list {
             if (!$support->can_use()) {
                 continue;
             }
-
             $url = new moodle_url($base, array('type' => $type));
-
             $str = get_string('viewer', 'block_ues_meta_viewer', $support->name());
-
             $content->items[] = html_writer::link($url, $str);
         }
 
